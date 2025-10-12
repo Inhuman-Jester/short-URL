@@ -1,0 +1,24 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>URL Shortener</h1>
+    <div>
+        <form method="post" action="/url">
+            <label>Enter your URL</label>
+            <input type="text" 
+            placeholder="https//:example.com"
+            name="originalLink" />
+            <button type="submit">Generate</button>
+        </form>
+
+        <% if (locals.id) {%>
+            <p> Shortened Link : http://localhost:8000/url/<%= id %></p>
+        <% } %>
+    </div>
+</body>
+</html>

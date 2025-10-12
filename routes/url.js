@@ -1,12 +1,14 @@
 import express from "express";
 import {
-    handleCreateNewId, handleGetUrl, getAnalyticsOfId
+    handleCreateNewId, handleGetUrl, handleGetAnalyticsOfId, handleGetAnalytics
 } from "../controller/url.js";
 
 const router = express.Router();
 
-router.post("/url", handleCreateNewId);
+
+router.post("/", handleCreateNewId);
+router.get("/analytic", handleGetAnalytics);
+router.get("/analytic/:id", handleGetAnalyticsOfId);
 router.get("/:id", handleGetUrl);
-router.get("/url/analytic/:id", getAnalyticsOfId);
 
 export default router;

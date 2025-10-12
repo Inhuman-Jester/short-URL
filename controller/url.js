@@ -1,6 +1,7 @@
 import URL from "../models/url.js";
 import {nanoid} from "nanoid";
 
+
 const handleCreateNewId = async (req, res) => {
     const body = req.body;
     if(!body)   {
@@ -15,7 +16,7 @@ const handleCreateNewId = async (req, res) => {
         visitHistory : [],
     });
 
-    return res.json( {id : id } );
+    return res.render( "home", { id : id } );
 }
 
 const handleGetUrl = async (req, res) =>{
@@ -32,7 +33,13 @@ const handleGetUrl = async (req, res) =>{
     return res.redirect( url.originalLink );
 }
 
-const getAnalyticsOfId = async (req, res) =>{
+const handleGetAnalytics = async(req, res) => {
+    const allUrl = await URL.find({});
+    console.log(allUrl);
+    return res.render("analytics", {allUrl : allUrl});
+}
+
+const handleGetAnalyticsOfId = async (req, res) =>{
     const id = req.params.id;
     
     const url = await URL.findOne({shortenedId: id});
@@ -43,4 +50,4 @@ const getAnalyticsOfId = async (req, res) =>{
     });
 }
 
-export {handleCreateNewId, handleGetUrl, getAnalyticsOfId};
+export {handleGetAnalytics, handleCreateNewId, handleGetUrl, handleGetAnalyticsOfId};
