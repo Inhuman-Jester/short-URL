@@ -9,11 +9,13 @@ const handleCreateNewId = async (req, res) => {
     }
 
     const id = nanoid(8);
+    console.log(req.user);
 
     const result = await URL.create({
         shortenedId : id,
         originalLink : body.originalLink,
         visitHistory : [],
+        createdBy : req.user._id,
     });
 
     return res.render( "home", { id : id } );
@@ -34,8 +36,7 @@ const handleGetUrl = async (req, res) =>{
 }
 
 const handleGetAnalytics = async(req, res) => {
-    const allUrl = await URL.find({});
-    console.log(allUrl);
+    const allUrl = await URL.find({ createdBy : req.user._id });
     return res.render("analytics", {allUrl : allUrl});
 }
 
