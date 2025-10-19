@@ -13,6 +13,6 @@ It also keeps a check on how many times and at what time stamps a link was acces
 
 3. **GET/url/:id** : Redirect from an id to the original URL.
 
-4. **GET/url/analytics** : Displays the original link and the number of times it is clicked.
+4. **GET/url/analytic** : Displays the original link and the number of times it is clicked.
 
 5. **GET/url/analytic/:id** : Returns the analytics, the timestamps and no. of times clicked.

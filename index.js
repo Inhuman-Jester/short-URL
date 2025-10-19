@@ -3,9 +3,7 @@ import dotenv from "dotenv";
 import path from "path";
 import cookieParser from "cookie-parser";
 
-dotenv.config({
-    path : './.env'
-});
+dotenv.config();
 
 import connectDB from './connect.js';
 import route from "./routes/url.js";
