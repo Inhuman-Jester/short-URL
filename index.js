@@ -9,7 +9,7 @@ import connectDB from './connect.js';
 import route from "./routes/url.js";
 import staticRoute from "./routes/staticRouter.js";
 import userRoute from "./routes/user.js";
-import allowLoggedinUserOnly from "./middleware/auth.js";
+import {allowLoggedinUserOnly, authorizeByRole} from "./middleware/auth.js";
 
 const app = express();
 const PORT = process.env.PORT || 8000;
@@ -22,9 +22,10 @@ app.set('views', path.resolve("./view"));
 app.use(express.json());
 app.use(express.urlencoded({extended : false}));
 app.use(cookieParser());
+app.use(allowLoggedinUserOnly);
 
-app.use("/url", allowLoggedinUserOnly, route);
 app.use("/", staticRoute);
+app.use("/url", authorizeByRole(["NORMAL", "ADMIN"]), route);
 app.use("/user", userRoute);
 
 app.listen(PORT, () => {

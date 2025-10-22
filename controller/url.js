@@ -3,13 +3,13 @@ import {nanoid} from "nanoid";
 
 
 const handleCreateNewId = async (req, res) => {
+    if(!req.user)   return res.redirect("/user/login")
     const body = req.body;
     if(!body)   {
         res.status(400).json( { error : "URL is required" } );
     }
 
     const id = nanoid(8);
-    console.log(req.user);
 
     const result = await URL.create({
         shortenedId : id,
@@ -36,11 +36,13 @@ const handleGetUrl = async (req, res) =>{
 }
 
 const handleGetAnalytics = async(req, res) => {
+    if(!req.user)   return res.redirect('/user/login');
     const allUrl = await URL.find({ createdBy : req.user._id });
     return res.render("analytics", {allUrl : allUrl});
 }
 
 const handleGetAnalyticsOfId = async (req, res) =>{
+    if(!req.user)   return res.redirect('/user/login');
     const id = req.params.id;
     
     const url = await URL.findOne({shortenedId: id});

@@ -1,14 +1,25 @@
-import { getUser } from "../service/auth.js";
+import { getUser } from "../service/auth.js"; 
 
 const allowLoggedinUserOnly = async (req, res, next) =>{
     const userUid = req.cookies.uid;
-    if(!userUid)    return res.redirect("/user/login");
+    req.user = null;
+    
+    if(!userUid)    return next();
     
     const user =  getUser(userUid);
-    if(!user)    return res.redirect("/user/login");
-
     req.user = user;
-    next();
+
+    return next();
 }
 
-export default allowLoggedinUserOnly;
+const authorizeByRole = (roles = []) => {
+    return (req, res, next) =>{
+        const role = req.user?.role;
+
+        if(!roles.includes(role))   return res.end("UNAUTHORIZED");
+
+        next();
+    }
+}
+
+export  {allowLoggedinUserOnly, authorizeByRole};
