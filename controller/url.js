@@ -5,7 +5,7 @@ import {nanoid} from "nanoid";
 const handleCreateNewId = async (req, res) => {
     if(!req.user)   return res.redirect("/user/login")
     const body = req.body;
-    if(!body)   {
+    if(!body.originalLink)   {
         res.status(400).json( { error : "URL is required" } );
     }
 
@@ -15,7 +15,7 @@ const handleCreateNewId = async (req, res) => {
         shortenedId : id,
         originalLink : body.originalLink,
         visitHistory : [],
-        createdBy : req.user._id,
+        createdBy : req.user.id,
     });
 
     return res.render( "home", { id : id } );
@@ -37,7 +37,7 @@ const handleGetUrl = async (req, res) =>{
 
 const handleGetAnalytics = async(req, res) => {
     if(!req.user)   return res.redirect('/user/login');
-    const allUrl = await URL.find({ createdBy : req.user._id });
+    const allUrl = await URL.find({ createdBy : req.user.id });
     return res.render("analytics", {allUrl : allUrl});
 }
 

@@ -15,6 +15,7 @@ const allowLoggedinUserOnly = async (req, res, next) =>{
 const authorizeByRole = (roles = []) => {
     return (req, res, next) =>{
         const role = req.user?.role;
+        if(!role)    return res.redirect('/user/login');
 
         if(!roles.includes(role))   return res.end("UNAUTHORIZED");
 
